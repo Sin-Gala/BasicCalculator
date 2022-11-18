@@ -4,15 +4,9 @@
 
 using namespace std;
 
-double Calculator::Calculate(string prompt)
+// Break the string into two lists
+void Calculator::SeparateString(std::string prompt)
 {
-    double result = 0.0;
-    list<double> nums;
-    list<double> oper;
-
-    string fullNum = "";
-
-    // Break the string into two lists
     for (int i = 0; i < prompt.size(); i++)
     {
         switch (prompt[i])
@@ -21,21 +15,34 @@ double Calculator::Calculate(string prompt)
             case '-':
             case '*':
             case '/':
-                if (fullNum != "")
-                {
-                    double x = stod(fullNum);
-                    nums.push_back(x);
-                    fullNum = "";
-                }
+                SetNumber();
                 oper.push_back(prompt[i]);
-                break;
+                continue;
             default:
-                fullNum += prompt[i];
-                break;
-        }            
-    }
+                fullNum = fullNum + prompt[i];
 
-    // Calculate the result
+                if (i != prompt.size() - 1)
+                    continue;
+                else
+                    break;
+        }
+
+        SetNumber();
+    }
+}
+
+void Calculator::SetNumber()
+{
+    if (fullNum == "") return;
+
+    double x = stod(fullNum);
+    nums.push_back(x);
+    fullNum = "";
+}
+
+double Calculator::Calculate(string prompt)
+{
+    // TODO: Make the calculs respect the operation order
     for (int i = 0; i < oper.size(); i++)
     {
         double n1 = 0.0;
