@@ -42,7 +42,10 @@ void Calculator::SetNumber()
 
 double Calculator::Calculate(string prompt)
 {
+    SeparateString(prompt);
+
     // TODO: Make the calculs respect the operation order
+    // * / + -
     for (int i = 0; i < oper.size(); i++)
     {
         double n1 = 0.0;
